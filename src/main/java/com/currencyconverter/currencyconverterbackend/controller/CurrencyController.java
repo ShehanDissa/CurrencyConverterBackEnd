@@ -20,8 +20,13 @@ public class CurrencyController {
     @PostMapping("/exchange")
     ResponseEntity<Double> GetExchangeValue(@RequestBody InputObject inputObject){
         Double rate = currencyService.getRate(inputObject.getSourceCurrency(),inputObject.getTargetCurrency());
-        Double convertedAmount = rate * parseDouble(inputObject.getAmount());
-        return new ResponseEntity<Double>(convertedAmount, HttpStatus.ACCEPTED);
+        if (rate != null) {
+            Double convertedAmount = rate * parseDouble(inputObject.getAmount());
+            return new ResponseEntity<Double>(convertedAmount, HttpStatus.ACCEPTED);
+        }
+        else {
+            return new ResponseEntity<Double>(HttpStatus.NOT_FOUND);
+        }
     }
 
 
