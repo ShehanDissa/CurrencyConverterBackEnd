@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class InputObject {
     private String sourceCurrency;
     private String targetCurrency ;
-    private Double amount;
+    private String amount;
 
     public String getSourceCurrency() {
         return sourceCurrency;
@@ -19,7 +19,7 @@ public class InputObject {
         return targetCurrency;
     }
 
-    public Double getAmount() {
+    public String getAmount() {
         return amount;
     }
 }

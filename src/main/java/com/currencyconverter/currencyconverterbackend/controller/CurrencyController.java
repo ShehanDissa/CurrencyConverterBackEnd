@@ -1,27 +1,26 @@
 package com.currencyconverter.currencyconverterbackend.controller;
 
-
 import com.currencyconverter.currencyconverterbackend.object.InputObject;
 import com.currencyconverter.currencyconverterbackend.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import static java.lang.Double.parseDouble;
+
 
 @RestController
 @RequestMapping("/api/exchangerate")
+@CrossOrigin
 public class CurrencyController {
 
     @Autowired
     private CurrencyService currencyService;
 
     @PostMapping("/exchange")
-    private ResponseEntity<Double> GetExchangeValue(@RequestBody InputObject inputObject){
+    ResponseEntity<Double> GetExchangeValue(@RequestBody InputObject inputObject){
         Double rate = currencyService.getRate(inputObject.getSourceCurrency(),inputObject.getTargetCurrency());
-        Double convertedAmount = rate * inputObject.getAmount() ;
+        Double convertedAmount = rate * parseDouble(inputObject.getAmount());
         return new ResponseEntity<Double>(convertedAmount, HttpStatus.ACCEPTED);
     }
 
